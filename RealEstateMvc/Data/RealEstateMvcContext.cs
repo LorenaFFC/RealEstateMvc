@@ -14,6 +14,9 @@ namespace RealEstateMvc.Data
         {
         }
 
-        public DbSet<RealEstateMvc.Models.Department> Department { get; set; }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Rent> Rent { get; set; }
+        public DbSet<Consultant> Consultant { get; set; }
+
     }
 }
