@@ -1,6 +1,6 @@
 using System;
 
-namespace RealEstateMvc.Models
+namespace RealEstateMvc.Models.ViewModels
 {
     public class ErrorViewModel
     {
