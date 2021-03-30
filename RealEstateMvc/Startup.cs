@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RealEstateMvc.Data;
+using RealEstateMvc.Services;
 
 namespace RealEstateMvc
 {
@@ -39,6 +40,7 @@ namespace RealEstateMvc
             services.AddDbContext<RealEstateMvcContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("RealEstateMvcContext")));
             services.AddScoped<SeedingService>();
+            services.AddScoped<ConsultantService>();
 
         }
 
