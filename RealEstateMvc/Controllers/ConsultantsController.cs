@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RealEstateMvc.Models;
 using RealEstateMvc.Services;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,19 @@ namespace RealEstateMvc.Controllers
         {
             var list = _consultantService.FindAll();
             return View(list);
+        }
+        
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Consultant consultant)
+        {
+            _consultantService.Insert(consultant);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -20,5 +20,12 @@ namespace RealEstateMvc.Services
         {
             return _context.Consultant.ToList();
         }
+
+        public void Insert(Consultant obj)
+        {
+            _context.Add(obj);
+            _context.SaveChanges();
+
+        }
     }
 }
