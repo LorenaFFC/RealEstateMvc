@@ -14,6 +14,7 @@ namespace RealEstateMvc.Models
         public DateTime Date { get; set; }
 
         public Department Departments { get; set; }
+        public int DeparmentId { get; set; }
         public ICollection<Rent> Rents { get; set; } = new List<Rent>();
 
         public Consultant()
