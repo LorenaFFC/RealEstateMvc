@@ -40,5 +40,28 @@ namespace RealEstateMvc.Controllers
             _consultantService.Insert(consultant);
             return RedirectToAction(nameof(Index));
         }
+
+        // Confirmar se quer realmente deletar
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = _consultantService.FindById(id.Value);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            _consultantService.Remove(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -25,6 +25,18 @@ namespace RealEstateMvc.Services
         {
             _context.Add(obj);
             _context.SaveChanges();
+        }
+
+        public Consultant FindById(int id)
+        {
+            return _context.Consultant.FirstOrDefault(obj => obj.Id == id);
+        }
+
+        public void Remove(int id)
+        {
+            var obj = _context.Consultant.Find(id);
+            _context.Consultant.Remove(obj);
+            _context.SaveChanges();
 
         }
     }
