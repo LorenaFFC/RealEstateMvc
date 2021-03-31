@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RealEstateMvc.Data;
 using RealEstateMvc.Models;
+using RealEstateMvc.Services.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,5 +43,23 @@ namespace RealEstateMvc.Services
             _context.SaveChanges();
 
         }
+
+        public void Update(Consultant obj)
+        {
+            if (!_context.Consultant.Any(x => x.Id == obj.Id))
+            {
+                throw new NotFoundException("Id Não Existe!!!!");
+            }
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+            catch(DbUpdateConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
+        }
+
     }
 }
