@@ -41,6 +41,7 @@ namespace RealEstateMvc
                     options.UseSqlServer(Configuration.GetConnectionString("RealEstateMvcContext")));
             services.AddScoped<SeedingService>();
             services.AddScoped<ConsultantService>();
+            services.AddScoped<DepartmentService>();
 
         }
 

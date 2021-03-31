@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstateMvc.Models;
+using RealEstateMvc.Models.ViewModels;
 using RealEstateMvc.Services;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace RealEstateMvc.Controllers
     public class ConsultantsController : Controller
     {
         private readonly ConsultantService _consultantService;
+        private readonly DepartmentService _departmentService;
 
-        public ConsultantsController(ConsultantService consultantService)
+        public ConsultantsController(ConsultantService consultantService, DepartmentService departmentService)
         {
             _consultantService = consultantService;
+            _departmentService = departmentService;
         }
 
         public IActionResult Index()
@@ -25,7 +28,9 @@ namespace RealEstateMvc.Controllers
         
         public IActionResult Create()
         {
-            return View();
+            var departments = _departmentService.FindAll();
+            var viewModel = new ConsultantFormViewModel { Departments = departments };
+            return View(viewModel);
         }
 
         [HttpPost]
