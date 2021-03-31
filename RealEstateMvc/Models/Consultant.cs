@@ -13,8 +13,8 @@ namespace RealEstateMvc.Models
         public double BaseSalary { get; set; }
         public DateTime Date { get; set; }
 
-        public Department Departments { get; set; }
-        public int DeparmentId { get; set; }
+        public Department Department { get; set; }
+        public int DepartmentId { get; set; }
         public ICollection<Rent> Rents { get; set; } = new List<Rent>();
 
         public Consultant()
@@ -28,7 +28,7 @@ namespace RealEstateMvc.Models
             Email = email;
             BaseSalary = baseSalary;
             Date = date;
-            Departments = departments;
+            Department = departments;
         }
 
         public void AddRent(Rent rent)

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RealEstateMvc.Data;
 
 namespace RealEstateMvc.Migrations
 {
     [DbContext(typeof(RealEstateMvcContext))]
-    partial class RealEstateMvcContextModelSnapshot : ModelSnapshot
+    [Migration("20210331141320_Atualizacao")]
+    partial class Atualizacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +31,9 @@ namespace RealEstateMvc.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int>("DepartmentId");
+                    b.Property<int>("DeparmentId");
+
+                    b.Property<int?>("DepartmentId");
 
                     b.Property<string>("Email");
 
@@ -84,8 +88,7 @@ namespace RealEstateMvc.Migrations
                 {
                     b.HasOne("RealEstateMvc.Models.Department", "Department")
                         .WithMany("Consultants")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("DepartmentId");
                 });
 
             modelBuilder.Entity("RealEstateMvc.Models.Rent", b =>

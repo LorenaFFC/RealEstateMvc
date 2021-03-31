@@ -1,4 +1,5 @@
-﻿using RealEstateMvc.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using RealEstateMvc.Data;
 using RealEstateMvc.Models;
 using System;
 using System.Collections.Generic;
@@ -28,8 +29,10 @@ namespace RealEstateMvc.Services
         }
 
         public Consultant FindById(int id)
-        {
-            return _context.Consultant.FirstOrDefault(obj => obj.Id == id);
+        {  // Dessa forma caarrega apenas o consultor. Para carregar o depto tem que fazer o join
+           // return _context.Consultant.FirstOrDefault(obj => obj.Id == id);
+            return _context.Consultant.Include(obj => obj.Department).FirstOrDefault(obj => 
+            obj.Id == id);
         }
 
         public void Remove(int id)
