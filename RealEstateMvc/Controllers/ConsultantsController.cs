@@ -5,6 +5,7 @@ using RealEstateMvc.Services;
 using RealEstateMvc.Services.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace RealEstateMvc.Controllers
             var list = _consultantService.FindAll();
             return View(list);
         }
-        
+
         public IActionResult Create()
         {
             var departments = _departmentService.FindAll();
@@ -47,12 +48,12 @@ namespace RealEstateMvc.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não foi fornecido" });
             }
             var obj = _consultantService.FindById(id.Value);
-            if(obj == null)
+            if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não foi encontrado" });
             }
             return View(obj);
         }
@@ -65,16 +66,16 @@ namespace RealEstateMvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(int ? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não foi fornecido" });
             }
             var obj = _consultantService.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não foi encontrado" });
             }
             return View(obj);
         }
@@ -83,12 +84,12 @@ namespace RealEstateMvc.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não foi fornecido" });
             }
             var obj = _consultantService.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não foi encontrado" });
             }
             List<Department> departments = _departmentService.FindAll();
             ConsultantFormViewModel viewModel = new ConsultantFormViewModel { Consultant = obj, Departments = departments };
@@ -99,9 +100,9 @@ namespace RealEstateMvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int Id, Consultant consultant)
         {
-            if(Id != consultant.Id)
+            if (Id != consultant.Id)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(Error), new { message = "Os Ids não correspondem!!" });
             }
             try
             {
@@ -109,15 +110,26 @@ namespace RealEstateMvc.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch(NotFoundException)
+            catch (NotFoundException e)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-            catch (DbConcurrencyException)
+            catch (DbConcurrencyException s)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(Error), new { message = s.Message });
             }
         }
-       
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+
+            return View(viewModel);
+
+        }
     }
 }
